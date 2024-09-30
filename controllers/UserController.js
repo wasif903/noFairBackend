@@ -14,7 +14,8 @@ const HandleSignup = async (req, res) => {
   try {
     const { username, email, password, role, phone } = req.body;
     const findUser =
-      (await UserModel.findOne()) || (await AdminModel.findOne());
+      (await UserModel.findOne({ email })) || (await AdminModel.findOne({email }));
+
 
     if (findUser) {
       return res.status(400).json({ message: "User Already Exists" });
